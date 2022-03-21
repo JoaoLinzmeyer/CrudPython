@@ -1,6 +1,4 @@
-from operator import truediv
 import os
-from ssl import OP_ENABLE_MIDDLEBOX_COMPAT 
 import dbFunctions
 import time
 
