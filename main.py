@@ -1,6 +1,4 @@
-from operator import truediv
 import os
-from ssl import OP_ENABLE_MIDDLEBOX_COMPAT 
 import dbFunctions
 import time
 
@@ -156,4 +154,3 @@ while True:
                 print('Não existe funcionário cadastrado com o cpf informado!\n')
         elif opcao == 5:
             print('Finalizando o programa!\n')
-            break   
