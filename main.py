@@ -154,3 +154,4 @@ while True:
                 print('Não existe funcionário cadastrado com o cpf informado!\n')
         elif opcao == 5:
             print('Finalizando o programa!\n')
+            break
