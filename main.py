@@ -32,14 +32,15 @@ def validaOpcao():
 #Chamando funcao de configuracao e conexão ao banco de dados 
 dbFunctions.cnnStart()
 
+#limpando tela
+os.system('cls')
+
 opcao=0
 # Programa Principal
 while True:
-    #limpando tela
-    #os.system('cls')
-
     listarOpcoes()
     opcao = validaOpcao()
+    
     if opcao == 0:
         continue
     else:
@@ -80,14 +81,24 @@ while True:
                         continue
                     else:
                         break
-
             else:
                 print('Cadastro cancelado! Retornando a tela inicial em 3 segundos!')
                 time.sleep(3)
                 continue
 
         elif opcao == 2:
-           'Logica para listar'
+            print('\n')
+            dados = dbFunctions.listarFunc()
+
+            print('Listando Cadastro Funcionários')
+
+            print('NOME | DATA NASCIMENTO | CPF | EMAIL')
+
+            for funcionario in dados:
+                nome, data_nascimento, cpf, email = funcionario
+                print(f'{nome} | {data_nascimento} | {cpf} | {email} |')
+            print('\n')
+                
         elif opcao == 3:
             'Logica para alterar'
         elif opcao == 4:
