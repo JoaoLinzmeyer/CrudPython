@@ -29,6 +29,26 @@ def validaOpcao():
         time.sleep(3)
         return 0
 
+#listar formatacao
+def listarFuncionarioFormat(dados):
+    print('\nNOME | DATA NASCIMENTO | CPF | EMAIL')
+
+    for funcionario in dados:
+        nome, data_nascimento, cpf, email = funcionario
+        print(f'{nome} | {data_nascimento} | {cpf} | {email} ')
+    print('\n') 
+
+def confirma(frase):
+    
+    while True:
+        res = input(f'{frase} (S - sim | N - NAO): ')
+        if res not in ('s','S','n','N'):
+            continue
+        else:
+            break
+    return res
+
+
 #Chamando funcao de configuracao e conexão ao banco de dados 
 dbFunctions.cnnStart()
 
@@ -63,7 +83,7 @@ while True:
             for chave, valor  in funcionario.items():
                 print(f'{chave} : {valor}')
 
-            confirmacao = input('Confirma o cadastro? (S para sim /N para não): ')
+            confirmacao = confirma('Confirma o cadastro?')
 
             if confirmacao in ('s','S'):
 
@@ -77,11 +97,11 @@ while True:
                     retornoFuncao = dbFunctions.cadastrarFunc(funcionario)
                     print('Cadastrado com sucesso!\n')
                     
-                    resposta = input('Deseja fazer mais alguma operação? S para sim / N para Nao: ')
-                    if resposta in ('s','S'):
-                        continue
-                    else:
-                        break
+                    # resposta = input('Deseja fazer mais alguma operação? S para sim / N para Nao: ')
+                    # if resposta in ('s','S'):
+                    #     continue
+                    # else:
+                    #     break
             else:
                 print('Cadastro cancelado! Retornando a tela inicial em 3 segundos!')
                 time.sleep(3)
@@ -92,13 +112,7 @@ while True:
             dados = dbFunctions.listarFunc()
 
             print('Listando Cadastro Funcionários')
-
-            print('NOME | DATA NASCIMENTO | CPF | EMAIL')
-
-            for funcionario in dados:
-                nome, data_nascimento, cpf, email = funcionario
-                print(f'{nome} | {data_nascimento} | {cpf} | {email} |')
-            print('\n')
+            listarFuncionarioFormat(dados)
     
         elif opcao == 3:
 
@@ -119,12 +133,27 @@ while True:
                 }
 
                 dbFunctions.alterarFunc(funcionario)
+                print('Dados alterados com sucesso!')
 
             else:
                 print('Não existe funcionário cadastrado com o cpf informado!\n')
 
         elif opcao == 4:
-            'Logica para deletar'
+            
+            cpf_func = input('Informe o CPF do funcionário que deseja deletar: ')
+            valCpf = dbFunctions.cpfExiste(cpf_func)
+            
+            if valCpf:
+                dados = dbFunctions.listarFunc(cpf_func)
+                listarFuncionarioFormat(dados)
+
+                confirmacao = confirma('Confirma a exclusão?')
+                if confirmacao in ('s','S'):
+                    dbFunctions.delete(cpf_func)  
+                else:
+                    print('Ação cancelada!')
+            else:
+                print('Não existe funcionário cadastrado com o cpf informado!\n')
         elif opcao == 5:
             print('Finalizando o programa!\n')
-            break            
+            break   
