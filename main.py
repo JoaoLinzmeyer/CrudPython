@@ -67,13 +67,14 @@ while True:
 
             if confirmacao in ('s','S'):
 
-                retornoFuncao = dbFunctions.cadastrarFunc(funcionario)
-                
-                if retornoFuncao == 1:
+                valCpf = dbFunctions.cpfExiste(funcionario['CPF'])
+                               
+                if valCpf:
                    print('CPF JÁ EXISTENTE, REINICIANDO!')
                    time.sleep(3)
                    continue
                 else:
+                    retornoFuncao = dbFunctions.cadastrarFunc(funcionario)
                     print('Cadastrado com sucesso!\n')
                     
                     resposta = input('Deseja fazer mais alguma operação? S para sim / N para Nao: ')
@@ -98,9 +99,30 @@ while True:
                 nome, data_nascimento, cpf, email = funcionario
                 print(f'{nome} | {data_nascimento} | {cpf} | {email} |')
             print('\n')
-                
+    
         elif opcao == 3:
-            'Logica para alterar'
+
+            cpf_func = input('Informe o CPF do funcionário que deseja alterar os dados: ')
+
+            valCpf = dbFunctions.cpfExiste(cpf_func)
+            if valCpf:
+                
+                nome_func = input('Informe o nome do funcionario: ')
+                data_nascimento = input('Informe a data de nascimento (DD/MM/AAAA): ')
+                email_func = input('Informe o e-mail do funcionario: ')
+
+                funcionario = {
+                'NOME' : nome_func,
+                'DATA_NASCIMENTO' : data_nascimento,
+                'CPF': cpf_func,
+                'EMAIL': email_func
+                }
+
+                dbFunctions.alterarFunc(funcionario)
+
+            else:
+                print('Não existe funcionário cadastrado com o cpf informado!\n')
+
         elif opcao == 4:
             'Logica para deletar'
         elif opcao == 5:
