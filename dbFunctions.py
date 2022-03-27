@@ -48,9 +48,9 @@ def cadastrarFunc(funcionario):
        cnn.commit()
 
 
-def listarFunc():
+def listarFunc(cpf=0):
 
-    query = f"select* from cad_funcs" 
+    query = f"select* from cad_funcs where 0={cpf} or cpf_func={cpf}" 
     cursor.execute(query)
     data  = cursor.fetchall()
     return data
@@ -58,5 +58,11 @@ def listarFunc():
 def alterarFunc(funcionario):
 
     query   = f"update cad_funcs  set nome_func='{funcionario['NOME']}', nasc_data='{funcionario['DATA_NASCIMENTO']}', email_func='{funcionario['EMAIL']}' where cpf_func={funcionario['CPF']}"
+    cursor.execute(query)
+    cnn.commit()
+
+def delete(cpf):
+    
+    query = f"delete from cad_funcs where cpf_func={cpf}"
     cursor.execute(query)
     cnn.commit()
