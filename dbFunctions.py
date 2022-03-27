@@ -1,4 +1,5 @@
 import sqlite3
+from winreg import QueryInfoKey
 
 def cnnStart(): 
     #String de conexão ao sqlite, caso esse banco não exista ele cria!
@@ -42,11 +43,6 @@ def cpfExiste(cpf):
 
 def cadastrarFunc(funcionario):
 
-    validacao = cpfExiste(funcionario['CPF'])
-
-    if validacao:
-       return 1 #erro 1 = CPF JA CADASTRADO
-    else:
        query = f"insert into cad_funcs (nome_func,nasc_data,cpf_func,email_func) values ('{funcionario['NOME']}','{funcionario['DATA_NASCIMENTO']}',{funcionario['CPF']},'{funcionario['EMAIL']}')"
        cursor.execute(query)
        cnn.commit()
@@ -58,3 +54,9 @@ def listarFunc():
     cursor.execute(query)
     data  = cursor.fetchall()
     return data
+
+def alterarFunc(funcionario):
+
+    query   = f"update cad_funcs  set nome_func='{funcionario['NOME']}', nasc_data='{funcionario['DATA_NASCIMENTO']}', email_func='{funcionario['EMAIL']}' where cpf_func={funcionario['CPF']}"
+    cursor.execute(query)
+    cnn.commit()
