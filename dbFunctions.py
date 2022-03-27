@@ -41,7 +41,6 @@ def cpfExiste(cpf):
 
 
 def cadastrarFunc(funcionario):
-    print(funcionario)
 
     validacao = cpfExiste(funcionario['CPF'])
 
@@ -51,5 +50,11 @@ def cadastrarFunc(funcionario):
        query = f"insert into cad_funcs (nome_func,nasc_data,cpf_func,email_func) values ('{funcionario['NOME']}','{funcionario['DATA_NASCIMENTO']}',{funcionario['CPF']},'{funcionario['EMAIL']}')"
        cursor.execute(query)
        cnn.commit()
-       data = cursor.fetchall()
-       print(data)
+
+
+def listarFunc():
+
+    query = f"select* from cad_funcs" 
+    cursor.execute(query)
+    data  = cursor.fetchall()
+    return data
